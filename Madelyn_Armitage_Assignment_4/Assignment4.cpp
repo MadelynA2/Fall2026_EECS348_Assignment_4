@@ -9,7 +9,7 @@
 
  // Outputs: Original puzzle, all valid solutions, or "No solution found"
 
- // Source: Modified from AI-generated code by [ChatGPT or Claude]
+ // Source: Modified from AI-generated code by ChatGPT
 
  // Author: Madelyn Armitage
 
