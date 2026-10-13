@@ -18,14 +18,19 @@
  // Collaborators/Outside Sources: ChatGPT and Claude for code comparison
 
 
+
+//following code block authored by ChatGPT
  #include <fstream>   // Provide file input operations.
 #include <iostream>  // Provide console output operations.
 #include <sstream>   // Provide string streams for validating each row.
 #include <string>    // Provide strings for filenames, lines, and tokens.
 #include <vector>    // Provide a list of filenames supplied by the user.
 
+//following code block authored by ChatGPT
 using namespace std; // Allow standard-library names without the std:: prefix.
 
+
+//following code block authored by ChatGPT
 class Sudoku { // Group puzzle data and solving operations inside one object.
 private: // Keep internal puzzle state and helper methods inaccessible to callers.
     static constexpr int BOARD_SIZE = 9; // Define the number of rows, columns, and allowed digits.
@@ -34,6 +39,7 @@ private: // Keep internal puzzle state and helper methods inaccessible to caller
     unsigned char board[BOARD_SIZE][BOARD_SIZE]{}; // Store each value in one byte instead of a typical four-byte int.
     int solutionCount = 0; // Track how many complete solutions have been printed.
 
+    //following code block authored by ChatGPT
     bool canPlace(int row, int col, int number) const { // Determine whether a digit is legal in one cell.
         for (int i = 0; i < BOARD_SIZE; i++) { // Check all positions along the cell's row and column.
             if (i != col && board[row][i] == number) { // Detect the proposed number elsewhere in the row.
@@ -44,6 +50,7 @@ private: // Keep internal puzzle state and helper methods inaccessible to caller
             } // Finish checking for a column conflict.
         } // Finish inspecting the row and column.
 
+        //following code block authored by ChatGPT
         const int startRow = (row / BLOCK_SIZE) * BLOCK_SIZE; // Locate the first row of the cell's 3x3 block.
         const int startCol = (col / BLOCK_SIZE) * BLOCK_SIZE; // Locate the first column of the cell's 3x3 block.
         for (int r = startRow; r < startRow + BLOCK_SIZE; r++) { // Visit every row in the same block.
@@ -56,6 +63,8 @@ private: // Keep internal puzzle state and helper methods inaccessible to caller
         return true; // Accept the number when all three Sudoku rules are satisfied.
     } // End the candidate-validation method.
 
+
+    //following code block authored by ChatGPT
     bool startingBoardIsValid() const { // Ensure the numbers provided in the file do not already conflict.
         for (int row = 0; row < BOARD_SIZE; row++) { // Visit every row in the original puzzle.
             for (int col = 0; col < BOARD_SIZE; col++) { // Visit every column in the original puzzle.
@@ -67,11 +76,14 @@ private: // Keep internal puzzle state and helper methods inaccessible to caller
         return true; // Confirm that the starting clues are consistent.
     } // End the original-board validation method.
 
+    //following code block authored by ChatGPT
     void solveRecursive() { // Search recursively for every valid completion of the board.
         int bestRow = -1; // Record the selected empty cell's row, or -1 if none exists.
         int bestCol = -1; // Record the selected empty cell's column, or -1 if none exists.
         int fewestCandidates = BOARD_SIZE + 1; // Begin above the maximum possible candidate count.
 
+
+        //following code block authored by ChatGPT
         for (int row = 0; row < BOARD_SIZE; row++) { // Search all rows for an empty cell with few candidates.
             for (int col = 0; col < BOARD_SIZE; col++) { // Search every column in the current row.
                 if (board[row][col] == EMPTY) { // Examine only cells not yet filled.
@@ -99,6 +111,8 @@ private: // Keep internal puzzle state and helper methods inaccessible to caller
             } // Finish checking whether to stop the outer search loop.
         } // Finish searching for the next empty cell.
 
+
+        //following code block authored by ChatGPT
         if (bestRow == -1) { // Recognize a solution when no empty cells remain.
             solutionCount++; // Increase the count of completed solutions.
             cout << "Solution " << solutionCount << ":\n"; // Label the newly discovered solution.
@@ -107,6 +121,8 @@ private: // Keep internal puzzle state and helper methods inaccessible to caller
             return; // Return so earlier calls can try other valid candidates.
         } // Finish handling a completed Sudoku puzzle.
 
+
+        //following code block authored by ChatGPT
         for (int number = 1; number <= BOARD_SIZE; number++) { // Try every digit in the selected empty cell.
             if (canPlace(bestRow, bestCol, number)) { // Only explore digits that currently obey Sudoku rules.
                 board[bestRow][bestCol] = static_cast<unsigned char>(number); // Tentatively fill the selected cell.
@@ -116,6 +132,8 @@ private: // Keep internal puzzle state and helper methods inaccessible to caller
         } // Finish all candidates for the selected cell.
     } // End the recursive backtracking method.
 
+
+    //following code block authored by ChatGPT
 public: // Make puzzle loading, printing, and solving available to the main program.
     bool loadPuzzle(const string& filename) { // Read and fully validate a Sudoku file.
         ifstream input(filename); // Open the requested puzzle file for reading.
@@ -156,6 +174,8 @@ public: // Make puzzle loading, printing, and solving available to the main prog
         return true; // Report that the file contains exactly one properly formatted puzzle.
     } // End the file-loading and input-validation method.
 
+
+    //following code block authored by ChatGPT
     void printBoard() const { // Print the current 9x9 puzzle, showing blanks as underscores.
         for (int row = 0; row < BOARD_SIZE; row++) { // Visit each row of the grid.
             for (int col = 0; col < BOARD_SIZE; col++) { // Visit each cell in the current row.
@@ -172,6 +192,8 @@ public: // Make puzzle loading, printing, and solving available to the main prog
         } // Finish printing every row in the grid.
     } // End the board-display method.
 
+
+    //following code block authored by ChatGPT
     void solve() { // Validate the given clues and search for every solution.
         solutionCount = 0; // Start a fresh count for the current puzzle.
         if (startingBoardIsValid()) { // Avoid exploring puzzles with contradictory starting clues.
@@ -185,6 +207,8 @@ public: // Make puzzle loading, printing, and solving available to the main prog
     } // End the public solving method.
 }; // Finish defining the Sudoku class.
 
+
+//following code block authored by ChatGPT
 int main(int argc, char* argv[]) { // Process requested puzzle files and run the Sudoku solver.
     vector<string> filenames; // Store the filenames that need to be solved.
     if (argc > 1) { // Check whether the user specified any filenames in the command line.
@@ -197,6 +221,8 @@ int main(int argc, char* argv[]) { // Process requested puzzle files and run the
         } // Finish constructing the default puzzle list.
     } // Finish choosing between the user-supplied and default filenames.
 
+
+    //following code block authored by ChatGPT
     for (const string& filename : filenames) { // Solve each requested file in sequence.
         Sudoku puzzle; // Create a new puzzle object with a clean board and solution count.
         cout << "File: " << filename << '\n'; // Display which input file is being processed.
