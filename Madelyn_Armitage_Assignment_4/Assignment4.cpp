@@ -1,6 +1,6 @@
 // EECS 348 Assignment 4 - Sudoku Solver
 
- // This program uses object-oriented programming and recursive backtracking
+ // Description: This program uses object-oriented programming and recursive backtracking
  // to solve five Sudoku puzzles. It reads each puzzle from a text file,
  // checks possible numbers against Sudoku rules, and prints all solutions
  // or indicates when no solution exists.
